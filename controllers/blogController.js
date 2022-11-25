@@ -24,12 +24,12 @@ const createBlog= async function(req,res){
        return res.status(400).send({status:false,msg:"authorId is invalid"}) //Checking authorId
     }
 
-    let find_author_Id = await AuthorModel.findById(req.body.authorId)
+    let find_author_Id = await AuthorModel.findById(data.authorId)
     if(!find_author_Id){
         return res.status(400).send({status:false,msg:"AuthoId is wrong"})
     }
 
-    if(req.body.isPublished){
+    if(data.isPublished){
        data["publishedAt"]=moment().format()
     }
 
@@ -50,6 +50,9 @@ module.exports.createBlog=createBlog
 
 const getblogwithauthor = async function(req,res){
     let authorId = req.query.authorId
+    if(!authorId){
+        return res.status(400).send({status:false, msg:"authorId is not provided"})
+    }
     try{
        let blogs = await BlogModel.find({authorId:{$eq:authorId}}).populate("authorId")
        console.log(blogs)

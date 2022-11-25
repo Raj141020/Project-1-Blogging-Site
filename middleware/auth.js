@@ -9,6 +9,7 @@ const authenticate= async function(req,res,next){
     return res.status(400).send({status:false,msg:"token must be present"})
    }
    let verifyToken= jwt.verify(token,"functionup-lithium-very-very-secret-key")
+   console.log(verifyToken)
    if(!verifyToken){
     return res.status(401).send({status:false,msg:"token is invalid"})
    }
@@ -16,8 +17,10 @@ const authenticate= async function(req,res,next){
    console.log("Authentication successfull")
 }
 catch(error){
-    res.status(500).send({status:false,msg:error.message})
+  
     console.log("Authentication Failed")
+    return res.status(500).send({status:false,msg:error.message})
+    
 }
 next()
 }
