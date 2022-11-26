@@ -42,10 +42,6 @@ const auth2= async function(req,res,next){
 
         let verifyToken= jwt.verify(token,"functionup-lithium-very-very-secret-key")
 
-        if(!verifyToken){
-         return res.status(400).send({status:false,msg:"token is invalid"})
-        }
-
         const{ authorId } = req.body
 
          let  loggedinAuthor= verifyToken.authorId.toString()
